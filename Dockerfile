@@ -4,6 +4,7 @@ MAINTAINER Emmanuel Ihenacho
 ARG DOWNLOAD_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz
 ARG PRODUCT_LABEL=ace-11.0.0.10
 
+USER root
 
 RUN yum --disableplugin=subscription-manager -y module enable \
   php:7.2 \
