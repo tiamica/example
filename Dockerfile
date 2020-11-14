@@ -20,7 +20,7 @@ RUN mkdir /opt/ibm && echo Downloading package ${DOWNLOAD_URL} && \
 WORKDIR /opt/ibm
 
 RUN microdnf update && microdnf install util-linux unzip python2 && microdnf clean all
-COPY --from=builder /opt/ibm/ace-11 /opt/ibm/ace-11
+#COPY --from=builder /opt/ibm/ace-11 /opt/ibm/ace-11
 
 
 # Create the ace workdir for user mqm, and chmod script files
