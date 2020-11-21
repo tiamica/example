@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal
+FROM ubi:latest
 
 RUN yum --disableplugin=subscription-manager -y module enable \
   php:7.2 \
