@@ -6,9 +6,7 @@ ARG PRODUCT_LABEL=ace-11.0.0.10
 
 USER root
 
-RUN yum --disableplugin=subscription-manager -y module enable \
-  && yum --disableplugin=subscription-manager -y install \
-  rsync curl \
+RUN yum --disableplugin=subscription-manager -y install rsync curl \
   && yum --disableplugin=subscription-manager clean all
  
 # Install ACE $PRODUCT_LABEL and accept the license
