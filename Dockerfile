@@ -1,4 +1,4 @@
-FROM example:latest
+FROM ubi:latest 
 MAINTAINER Emmanuel Ihenacho
 
 ARG DOWNLOAD_URL=http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/integration/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz
@@ -19,10 +19,6 @@ RUN mkdir /opt/ibm && echo Downloading package ${DOWNLOAD_URL} && \
     /opt/ibm/ace-11/ace make registry global accept license deferred
 
 WORKDIR /opt/ibm
-
-RUN microdnf update && microdnf install util-linux unzip python2 && microdnf clean all
-#COPY --from=builder /opt/ibm/ace-11 /opt/ibm/ace-11
-
 
 # Create the ace workdir for user mqm, and chmod script files
 RUN mkdir /home/aceuser \
