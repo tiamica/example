@@ -3,7 +3,7 @@ FROM ubi:latest
 RUN yum --disableplugin=subscription-manager -y module enable \
   php:7.2 \
   && yum --disableplugin=subscription-manager -y install \
-  httpd php \
+  httpd php rsync \
   && yum --disableplugin=subscription-manager clean all
 
 ADD index.php /var/www/html
