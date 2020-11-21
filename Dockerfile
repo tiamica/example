@@ -1,4 +1,4 @@
-FROM ubi:latest 
+FROM http-php:latest 
 MAINTAINER Emmanuel Ihenacho
 
 ARG DOWNLOAD_URL=http://10.116.0.112:8080/ibm/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz
@@ -10,16 +10,15 @@ RUN yum --disableplugin=subscription-manager -y install rsync curl \
   && yum --disableplugin=subscription-manager clean all
  
 # Install ACE $PRODUCT_LABEL and accept the license
-RUN mkdir /opt/ibm && echo Downloading package ${DOWNLOAD_URL} && \
-    curl ${DOWNLOAD_URL} && \
-    tar xzvf 11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz && \
+RUN mkdir -p /opt/ibm && echo Downloading package ${DOWNLOAD_URL} && \
+    tar xzvf /var/www/html/ibm/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz && \
     mv ${PRODUCT_LABEL} /opt/ibm/ace-11 && \
     /opt/ibm/ace-11/ace make registry global accept license deferred
 
-WORKDIR /opt/ibm
+WORKDIR /opt/ibm/ace-11
 
 # Run ace server
-RUN export PATH=/opt/ibm:$PATH
+RUN export PATH=/opt/ibm/ace-11:$PATH
 RUN ace make registry global
 RUN ace toolkit && ace tools
 Run ace verify all
