@@ -7,15 +7,15 @@ ARG PRODUCT_LABEL=ace-11.0.0.10
 USER root
 
 RUN yum --disableplugin=subscription-manager -y module enable \
-  php:7.2 \
   && yum --disableplugin=subscription-manager -y install \
-  httpd php curl \
+  rsync curl \
   && yum --disableplugin=subscription-manager clean all
  
 # Install ACE $PRODUCT_LABEL and accept the license
 RUN mkdir /opt/ibm && echo Downloading package ${DOWNLOAD_URL} && \
-    curl ${DOWNLOAD_URL} | tar zx --directory /opt/ibm && \
-    mv /opt/ibm/${PRODUCT_LABEL} /opt/ibm/ace-11 && \
+    curl ${DOWNLOAD_URL} && \
+    tar xzvf 11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz && \
+    mv ${PRODUCT_LABEL} /opt/ibm/ace-11 && \
     /opt/ibm/ace-11/ace make registry global accept license deferred
 
 WORKDIR /opt/ibm
@@ -24,6 +24,7 @@ WORKDIR /opt/ibm
 RUN export PATH=/opt/ibm:$PATH
 RUN ace make registry global
 RUN ace toolkit && ace tools
+Run ace verify all
 
 # Expose ports.  7600, 7800, 7843 for ACE; 1414 for MQ; 9157 for MQ metrics; 9483 for ACE metrics;
 EXPOSE 7600 7800 7843 1414 9157 9483
@@ -50,4 +51,3 @@ LABEL summary="$SUMMARY" \
       maintainer="Hybrid Integration Platform Cloud" \
       io.openshift.expose-services="" \
       usage=""
-
