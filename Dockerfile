@@ -12,16 +12,16 @@ RUN yum --disableplugin=subscription-manager -y install rsync curl \
 # Install ACE $PRODUCT_LABEL and accept the license
 RUN mkdir -p /opt/ibm && echo Downloading package ${DOWNLOAD_URL} && \
     curl http://http-php-default.apps-crc.testing/ibm/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz --output /tmp/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz
-RUN cd /tmp && tar xzvf /tmp/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz && \
-    mv /tmp/${PRODUCT_LABEL} /opt/ibm/ace-11
-RUN ./opt/ibm/ace-11/ace make registry global accept license deferred
+# RUN cd /tmp && tar xzvf /tmp/11.0.0.10-ACE-LINUX64-DEVELOPER.tar.gz && \
+#    mv /tmp/${PRODUCT_LABEL} /opt/ibm/ace-11
+# RUN ./opt/ibm/ace-11/ace make registry global accept license deferred
 
 WORKDIR /opt/ibm/ace-11/bin
 
 # Run ace server
-RUN export PATH=/opt/ibm/ace-11/server/bin:$PATH
-RUN . ./opt/ibm/ace-11/server/bin/mqsiprofile
-RUN . ./opt/ibm/ace-11/server/bin/IntegrationServer --work-dir /tmp/ibmace --default-application-name ibmace 
+# RUN export PATH=/opt/ibm/ace-11/server/bin:$PATH
+# RUN . ./opt/ibm/ace-11/server/bin/mqsiprofile
+# RUN . ./opt/ibm/ace-11/server/bin/IntegrationServer --work-dir /tmp/ibmace --default-application-name ibmace 
 
 # Expose ports.  7600, 7800, 7843 for ACE; 1414 for MQ; 9157 for MQ metrics; 9483 for ACE metrics;
 EXPOSE 7600
